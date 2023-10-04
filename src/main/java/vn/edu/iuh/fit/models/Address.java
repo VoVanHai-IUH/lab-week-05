@@ -2,10 +2,7 @@ package vn.edu.iuh.fit.models;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.annotations.UuidGenerator;
 import vn.edu.iuh.fit.enums.Country;
-
-import java.util.UUID;
 
 @Entity
 @EqualsAndHashCode(of = {"id"})
@@ -15,10 +12,9 @@ import java.util.UUID;
 @Data
 public class Address {
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    @UuidGenerator
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private UUID id;
+    private long id;
     @Column(name = "number", length = 20)
     private String number;
     @Column(name = "Street", length = 150)

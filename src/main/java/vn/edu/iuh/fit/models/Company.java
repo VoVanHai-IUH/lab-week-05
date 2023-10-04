@@ -14,9 +14,9 @@ import java.util.UUID;
 //@NoArgsConstructor @RequiredArgsConstructor
 public class Company {
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "comp_id")
-    private UUID id;
+    private long id;
 
     @Column(name = "comp_name", nullable = false)
     private String name;

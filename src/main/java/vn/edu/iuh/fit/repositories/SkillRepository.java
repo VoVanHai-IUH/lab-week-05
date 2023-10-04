@@ -5,5 +5,5 @@ import vn.edu.iuh.fit.models.Skill;
 
 import java.util.UUID;
 
-public interface SkillRepository extends JpaRepository<Skill, UUID> {
+public interface SkillRepository extends JpaRepository<Skill, Long> {
 }

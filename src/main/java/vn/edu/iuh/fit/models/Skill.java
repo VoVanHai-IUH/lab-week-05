@@ -11,9 +11,9 @@ import java.util.UUID;
 @Table (name = "skill")
 @Data
 public class Skill {
-    @Id @GeneratedValue(strategy = GenerationType.UUID)
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "skill_id")
-    private UUID id;
+    private long id;
     private String skillName;
     private SkillType type;
     private String skillDescription;

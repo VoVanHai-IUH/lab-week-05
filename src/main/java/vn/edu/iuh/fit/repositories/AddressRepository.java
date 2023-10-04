@@ -5,5 +5,5 @@ import vn.edu.iuh.fit.models.Address;
 
 import java.util.UUID;
 
-public interface AddressRepository extends CrudRepository<Address, UUID> {
+public interface AddressRepository extends CrudRepository<Address, Long> {
 }

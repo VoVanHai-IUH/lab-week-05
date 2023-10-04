@@ -5,5 +5,5 @@ import vn.edu.iuh.fit.models.Candidate;
 
 import java.util.UUID;
 
-public interface CandidateRepository extends JpaRepository<Candidate, UUID> {
+public interface CandidateRepository extends JpaRepository<Candidate, Long> {
 }

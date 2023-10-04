@@ -14,8 +14,8 @@ import java.util.UUID;
 //@NoArgsConstructor @RequiredArgsConstructor
 public class Candidate {
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
 
     @Column(name = "full_name", nullable = false)
     private String fullName;
