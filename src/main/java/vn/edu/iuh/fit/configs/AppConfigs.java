@@ -1,4 +1,5 @@
 package vn.edu.iuh.fit.configs;
 
-public class AppConfigs {
+
+public class AppConfigs{
 }
