@@ -1,20 +1,23 @@
 package vn.edu.iuh.fit.models;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
 @Table(name = "candidate")
 @Data
-//@NoArgsConstructor @RequiredArgsConstructor
+@NoArgsConstructor @AllArgsConstructor
 public class Candidate {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "can_id")
     private long id;
 
     @Column(name = "full_name", nullable = false)
@@ -36,5 +39,6 @@ public class Candidate {
 
 
     //====================RELATIONSHIPS========================
-
+    @OneToMany(mappedBy = "candidate", fetch = FetchType.LAZY)
+    private List<Experience> experiences;
 }

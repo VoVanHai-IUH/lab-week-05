@@ -1,10 +1,11 @@
 package vn.edu.iuh.fit.enums;
 
 public enum SkillType {
-    NEUTRAL(0),
+    UNSPECIFIC(0),
 
-    HARD(1),
-    SOFT(2);
+    TECHNICAL_SKILL(1),
+
+    SOFT_SKILL(2);
 
     SkillType(int value) {
     }

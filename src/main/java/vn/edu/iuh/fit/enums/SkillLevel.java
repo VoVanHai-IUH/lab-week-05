@@ -1,10 +1,15 @@
 package vn.edu.iuh.fit.enums;
 
 public enum SkillLevel {
-    NEUTRAL(0),
+    MASTER(5),
 
-    HARD(1),
-    SOFT(2);
+    PROFESSIONAL(4),
+
+    ADVANCED(3),
+
+    IMTERMEDIATE(2),
+
+    BEGINER(1);
 
     SkillLevel(int value) {
     }

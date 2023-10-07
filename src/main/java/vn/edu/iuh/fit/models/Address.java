@@ -13,7 +13,7 @@ import vn.edu.iuh.fit.enums.Country;
 public class Address {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
+    @Column(name = "add_id")
     private long id;
     @Column(name = "number", length = 20)
     private String number;
@@ -35,9 +35,9 @@ public class Address {
         this.country = country;
     }
 
-    /* @OneToOne @JoinColumn
+    @OneToOne
     private Candidate candidate;
 
-    @OneToOne @JoinColumn
-    private Company company;*/
+    @OneToOne
+    private Company company;
 }

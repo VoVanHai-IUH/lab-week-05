@@ -1,6 +1,7 @@
 package vn.edu.iuh.fit.models;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
@@ -11,11 +12,12 @@ import java.util.UUID;
 @Entity
 @Table(name = "company")
 @Data
-//@NoArgsConstructor @RequiredArgsConstructor
+@NoArgsConstructor
+@AllArgsConstructor
 public class Company {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "comp_id")
+    @Column(name = "com_id")
     private long id;
 
     @Column(name = "comp_name", nullable = false)

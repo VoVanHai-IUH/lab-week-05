@@ -1,12 +1,18 @@
 package vn.edu.iuh.fit.models;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import vn.edu.iuh.fit.enums.SkillLevel;
+import vn.edu.iuh.fit.ids.JobSkillID;
 
 @Entity
 @Table(name = "job_skill")
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
+@IdClass(JobSkillID.class)
 public class JobSkill {
     @Id
     @ManyToOne
