@@ -28,5 +28,6 @@ public class Experience {
 
     //=============================RELATIONSHIPS====================
     @ManyToOne(cascade=CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name = "can_id")
     private Candidate candidate;
 }

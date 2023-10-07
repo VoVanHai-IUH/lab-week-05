@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import vn.edu.iuh.fit.enums.SkillType;
 
+import java.util.List;
 import java.util.UUID;
 
 //Read skill list at: https://www.yourdictionary.com/articles/examples-skills-list
@@ -28,5 +29,7 @@ public class Skill {
     private String skillDescription;
 
     //====================
+    @OneToMany(mappedBy = "skill")
+    private List<JobSkill>jobSkills;
 
 }

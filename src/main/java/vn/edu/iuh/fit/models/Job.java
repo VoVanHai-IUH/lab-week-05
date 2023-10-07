@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -27,4 +28,7 @@ public class Job {
     @ManyToOne
     @JoinColumn(name = "company")
     private Company company;
+
+    @OneToMany(mappedBy = "job")
+    private List<JobSkill> jobSkills;
 }

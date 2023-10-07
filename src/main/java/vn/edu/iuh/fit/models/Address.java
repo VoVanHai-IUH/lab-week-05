@@ -1,8 +1,8 @@
 package vn.edu.iuh.fit.models;
 
+import com.neovisionaries.i18n.CountryCode;
 import jakarta.persistence.*;
 import lombok.*;
-import vn.edu.iuh.fit.enums.Country;
 
 @Entity
 @EqualsAndHashCode(of = {"id"})
@@ -24,10 +24,10 @@ public class Address {
     @Column(name = "zipcode", length = 7)
     private String zipcode;
     @Column(name = "country", length = 30)
-    private Country country;
+    private CountryCode country;
 
 
-    public Address(String number, String street, String city, String zipcode, Country country) {
+    public Address(String number, String street, String city, String zipcode, CountryCode country) {
         this.number = number;
         Street = street;
         this.city = city;
@@ -35,9 +35,11 @@ public class Address {
         this.country = country;
     }
 
-    @OneToOne
-    private Candidate candidate;
-
-    @OneToOne
-    private Company company;
+//    @OneToOne
+//    @JoinColumn
+//    private Candidate candidate;
+//
+//    @OneToOne
+//    @JoinColumn
+//    private Company company;
 }
