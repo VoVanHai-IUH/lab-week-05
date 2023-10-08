@@ -34,10 +34,6 @@
 <body>
 <table class="table table-hover">
     <thead>
-    <!--<tr>
-        <th th:text="#{msg.id}"/>
-        <th th:text="#{msg.name}"/>
-    </tr>-->
     </thead>
     <tbody>
     <tr th:each="candidate, iStat : ${candidatePage.content}"
@@ -52,8 +48,7 @@
     </tr>
     </tbody>
 </table>
-<div th:if="${candidatePage.totalPages > 0}" class="pagination"
-     th:each="pageNumber : ${pageNumbers}">
+<div class="pagination"  th:if="${candidatePage.totalPages > 0}" th:each="pageNumber : ${pageNumbers}">
     <a th:href="@{/list(size=${candidatePage.size}, page=${pageNumber})}"
        th:text="${pageNumber}"
        th:class="${pageNumber==candidatePage.number + 1} ? active"></a>
