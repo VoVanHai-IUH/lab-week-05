@@ -6,8 +6,8 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import vn.edu.iuh.fit.models.Address;
-import vn.edu.iuh.fit.repositories.AddressRepository;
+import vn.edu.iuh.fit.backend.models.Address;
+import vn.edu.iuh.fit.backend.repositories.AddressRepository;
 
 @SpringBootTest
 class LabWeek05ApplicationTests {
