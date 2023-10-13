@@ -9,6 +9,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 import vn.edu.iuh.fit.backend.models.Candidate;
 import vn.edu.iuh.fit.backend.repositories.CandidateRepository;
 import vn.edu.iuh.fit.backend.services.CandidateServices;
@@ -19,20 +20,19 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 @Controller
-//@RequestMapping
 public class CandidateController {
     @Autowired
     private CandidateRepository candidateRepository;
     @Autowired
     private CandidateServices candidateServices;
 
-    @GetMapping("/candidates")
+    @GetMapping("/list")
     public String showCandidateList(Model model) {
         model.addAttribute("candidates", candidateRepository.findAll());
-        return "candidates";
+        return "candidates/candidates";
     }
 
-    @GetMapping("/list")
+    @GetMapping("/candidates")
     public String showCandidateListPaging(Model model,
                                           @RequestParam("page") Optional<Integer> page,
                                           @RequestParam("size") Optional<Integer> size) {
@@ -51,23 +51,21 @@ public class CandidateController {
                     .collect(Collectors.toList());
             model.addAttribute("pageNumbers", pageNumbers);
         }
-
-
-        return "candidates-paging";
+        return "candidates/candidates-paging";
     }
-    @PostMapping("/add")
+    @PostMapping("/candidates/add")
     public String addCandidate( Candidate candidate, BindingResult result, Model model) {
-        if (result.hasErrors()) {
-            return "add-user";
-        }
         candidateRepository.save(candidate);
-        return "redirect:/index";
+        return "redirect:/candidates";
     }
 
-//    public String getAllCandidates(Model model){
-////        lst =candidateRepository.findAll(Candidate.class,)
-//
-//        return "/";
-//    }
+    @GetMapping("/add-candidate")
+    public ModelAndView add(Model mode){
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.addObject("candidate", new Candidate());
+        modelAndView.setViewName("candidates/add-candidate");
+        return modelAndView;
+    }
+
 
 }

@@ -2,22 +2,14 @@
 <html lang="en">
 <!--https://github.com/eugenp/tutorials/blob/master/spring-web-modules/spring-thymeleaf-5/src/main/webapp/WEB-INF/views/listBooks.html-->
 <style>
-    .pagination {
-        display: inline-block;
-    }
-
-    .pagination a {
+    div.inline {
         color: black;
         float: left;
         padding: 5px 5px;
         text-decoration: none;
+        display: inline-block;
     }
 
-    .pagination a.active {
-        background-color: gray;
-        color: white;
-        border-radius: 2px;
-    }
 </style>
 <head>
     <meta charset="UTF-8">
@@ -32,6 +24,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 <body>
+<h1 class="text-center">LIST CANDIDATES</h1>
 <table class="table table-hover">
     <thead>
     </thead>
@@ -48,10 +41,12 @@
     </tr>
     </tbody>
 </table>
-<div class="pagination"  th:if="${candidatePage.totalPages > 0}" th:each="pageNumber : ${pageNumbers}">
-    <a th:href="@{/list(size=${candidatePage.size}, page=${pageNumber})}"
+<div  class="inline"  th:if="${candidatePage.totalPages > 0}" th:each="pageNumber : ${pageNumbers}">
+    <a th:href="@{/candidates(size=${candidatePage.size}, page=${pageNumber})}"
        th:text="${pageNumber}"
        th:class="${pageNumber==candidatePage.number + 1} ? active"></a>
 </div>
+<br/>
+<div class = "row"><a href="/add-candidate">Add a new Candidate</a></div>
 </body>
 </html>
