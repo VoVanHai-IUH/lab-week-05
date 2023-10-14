@@ -38,9 +38,11 @@ public class CandidateController {
                                           @RequestParam("size") Optional<Integer> size) {
         int currentPage = page.orElse(1);
         int pageSize = size.orElse(10);
-        Page<Candidate> candidatePage= candidateServices.findPaginated(
+        /*Page<Candidate> candidatePage= candidateServices.findPaginated(
                 PageRequest.of(currentPage - 1, pageSize)
-        );
+        );*/
+        Page<Candidate> candidatePage = candidateServices.findAll(currentPage - 1,
+                pageSize, "id", "asc");
 
         model.addAttribute("candidatePage", candidatePage);
 
@@ -53,14 +55,15 @@ public class CandidateController {
         }
         return "candidates/candidates-paging";
     }
+
     @PostMapping("/candidates/add")
-    public String addCandidate( Candidate candidate, BindingResult result, Model model) {
+    public String addCandidate(Candidate candidate, BindingResult result, Model model) {
         candidateRepository.save(candidate);
         return "redirect:/candidates";
     }
 
     @GetMapping("/add-candidate")
-    public ModelAndView add(Model mode){
+    public ModelAndView add(Model mode) {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("candidate", new Candidate());
         modelAndView.setViewName("candidates/add-candidate");
