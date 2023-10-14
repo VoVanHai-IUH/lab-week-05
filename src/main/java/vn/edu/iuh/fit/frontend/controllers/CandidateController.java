@@ -66,6 +66,4 @@ public class CandidateController {
         modelAndView.setViewName("candidates/add-candidate");
         return modelAndView;
     }
-
-
 }
