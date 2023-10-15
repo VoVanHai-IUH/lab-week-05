@@ -1,17 +1,13 @@
 package vn.edu.iuh.fit.frontend.controllers;
 
 import com.neovisionaries.i18n.CountryCode;
+import jakarta.websocket.server.PathParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import vn.edu.iuh.fit.backend.models.Address;
 import vn.edu.iuh.fit.backend.models.Candidate;
@@ -36,7 +32,7 @@ public class CandidateController {
     @GetMapping("/list")
     public String showCandidateList(Model model) {
         model.addAttribute("candidates", candidateRepository.findAll());
-        return "candidates/candidates";
+        return "candidates/list_no_paging";
     }
 
     @GetMapping("/candidates")
@@ -60,9 +56,20 @@ public class CandidateController {
                     .collect(Collectors.toList());
             model.addAttribute("pageNumbers", pageNumbers);
         }
-        return "candidates/candidates-paging";
+        return "candidates/list";
     }
 
+    @GetMapping("/show-add-form")
+    public ModelAndView add(Model model) {
+        ModelAndView modelAndView = new ModelAndView();
+        Candidate candidate = new Candidate();
+        candidate.setAddress(new Address());
+        modelAndView.addObject("candidate", candidate);
+        modelAndView.addObject("address", candidate.getAddress());
+        modelAndView.addObject("countries", CountryCode.values());
+        modelAndView.setViewName("candidates/add");
+        return modelAndView;
+    }
     @PostMapping("/candidates/add")
     public String addCandidate(
             @ModelAttribute("candidate") Candidate candidate,
@@ -74,15 +81,27 @@ public class CandidateController {
         return "redirect:/candidates";
     }
 
-    @GetMapping("/add-candidate")
-    public ModelAndView add(Model model) {
+    @GetMapping("/show-edit-form/{id}")
+    public ModelAndView edit(@PathVariable("id") long id) {
         ModelAndView modelAndView = new ModelAndView();
-        Candidate candidate = new Candidate();
-        candidate.setAddress(new Address());
-        modelAndView.addObject("candidate", candidate);
-        modelAndView.addObject("address", candidate.getAddress());
-        modelAndView.addObject("countries", CountryCode.values());
-        modelAndView.setViewName("candidates/add-candidate");
+        Optional<Candidate> opt = candidateRepository.findById(id);
+        if(opt.isPresent()) {
+            Candidate candidate = opt.get();
+            modelAndView.addObject("candidate", candidate);
+            modelAndView.addObject("address", candidate.getAddress());
+            modelAndView.addObject("countries", CountryCode.values());
+            modelAndView.setViewName("candidates/update");
+        }
         return modelAndView;
+    }
+    @PostMapping("/candidates/update")
+    public String update(
+            @ModelAttribute("candidate") Candidate candidate,
+            @ModelAttribute("address") Address address,
+            BindingResult result, Model model) {
+        addressRepository.save(address);
+//        candidate.setAddress(address);
+        candidateRepository.save(candidate);
+        return "redirect:/candidates";
     }
 }
