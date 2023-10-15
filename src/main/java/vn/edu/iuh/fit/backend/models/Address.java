@@ -9,6 +9,8 @@ import org.apache.logging.log4j.util.StringBuilders;
 @Table(name = "address")
 @NoArgsConstructor
 @AllArgsConstructor
+@Getter
+@Setter
 public class Address {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,7 +25,7 @@ public class Address {
     @Column(name = "zipcode", length = 7)
     private String zipcode;
     @Column(name = "country", length = 30)
-    private CountryCode country;
+    private CountryCode country = CountryCode.VN;
 
 
     public Address(String number, String street, String city, String zipcode, CountryCode country) {

@@ -1,16 +1,21 @@
 package vn.edu.iuh.fit.frontend.controllers;
 
+import com.neovisionaries.i18n.CountryCode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import vn.edu.iuh.fit.backend.models.Address;
 import vn.edu.iuh.fit.backend.models.Candidate;
+import vn.edu.iuh.fit.backend.repositories.AddressRepository;
 import vn.edu.iuh.fit.backend.repositories.CandidateRepository;
 import vn.edu.iuh.fit.backend.services.CandidateServices;
 
@@ -25,6 +30,8 @@ public class CandidateController {
     private CandidateRepository candidateRepository;
     @Autowired
     private CandidateServices candidateServices;
+    @Autowired
+    private AddressRepository addressRepository;
 
     @GetMapping("/list")
     public String showCandidateList(Model model) {
@@ -57,15 +64,24 @@ public class CandidateController {
     }
 
     @PostMapping("/candidates/add")
-    public String addCandidate(Candidate candidate, BindingResult result, Model model) {
+    public String addCandidate(
+            @ModelAttribute("candidate") Candidate candidate,
+            @ModelAttribute("address") Address address,
+                               BindingResult result, Model model) {
+        addressRepository.save(address);
+        candidate.setAddress(address);
         candidateRepository.save(candidate);
         return "redirect:/candidates";
     }
 
     @GetMapping("/add-candidate")
-    public ModelAndView add(Model mode) {
+    public ModelAndView add(Model model) {
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.addObject("candidate", new Candidate());
+        Candidate candidate = new Candidate();
+        candidate.setAddress(new Address());
+        modelAndView.addObject("candidate", candidate);
+        modelAndView.addObject("address", candidate.getAddress());
+        modelAndView.addObject("countries", CountryCode.values());
         modelAndView.setViewName("candidates/add-candidate");
         return modelAndView;
     }
