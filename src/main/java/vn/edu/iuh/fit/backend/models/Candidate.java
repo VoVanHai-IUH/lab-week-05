@@ -12,7 +12,7 @@ import java.util.List;
 @Entity
 @Table(name = "candidate")
 @Data
-@NoArgsConstructor @AllArgsConstructor
+@NoArgsConstructor
 public class Candidate {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -36,6 +36,8 @@ public class Candidate {
     @Column(name = "email", nullable = false, unique = true)
     private String email;
 
+    private int status = 1;
+
     public Candidate(String fullName, LocalDate dob, Address address, String phone, String email) {
         this.fullName = fullName;
         this.dob = dob;
@@ -44,10 +46,21 @@ public class Candidate {
         this.email = email;
     }
 
+    public Candidate(String fullName, LocalDate dob, Address address, String phone, String email, int status) {
+        this.fullName = fullName;
+        this.dob = dob;
+        this.address = address;
+        this.phone = phone;
+        this.email = email;
+        this.status = status;
+    }
+
     //====================RELATIONSHIPS========================
     @OneToMany(mappedBy = "candidate", fetch = FetchType.LAZY)
     private List<Experience> experiences;
 
     @OneToMany(mappedBy = "candidate", fetch = FetchType.LAZY)
     private List<CandidateSkill> candidateSkills;
+
+
 }

@@ -21,6 +21,7 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 @Controller
+@RequestMapping("/candidates")
 public class CandidateController {
     @Autowired
     private CandidateRepository candidateRepository;
@@ -35,7 +36,7 @@ public class CandidateController {
         return "candidates/list_no_paging";
     }
 
-    @GetMapping("/candidates")
+    @GetMapping("")
     public String showCandidateListPaging(Model model,
                                           @RequestParam("page") Optional<Integer> page,
                                           @RequestParam("size") Optional<Integer> size) {
@@ -70,11 +71,12 @@ public class CandidateController {
         modelAndView.setViewName("candidates/add");
         return modelAndView;
     }
-    @PostMapping("/candidates/add")
+
+    @PostMapping("/add")
     public String addCandidate(
             @ModelAttribute("candidate") Candidate candidate,
             @ModelAttribute("address") Address address,
-                               BindingResult result, Model model) {
+            BindingResult result, Model model) {
         addressRepository.save(address);
         candidate.setAddress(address);
         candidateRepository.save(candidate);
@@ -85,7 +87,7 @@ public class CandidateController {
     public ModelAndView edit(@PathVariable("id") long id) {
         ModelAndView modelAndView = new ModelAndView();
         Optional<Candidate> opt = candidateRepository.findById(id);
-        if(opt.isPresent()) {
+        if (opt.isPresent()) {
             Candidate candidate = opt.get();
             modelAndView.addObject("candidate", candidate);
             modelAndView.addObject("address", candidate.getAddress());
@@ -94,7 +96,8 @@ public class CandidateController {
         }
         return modelAndView;
     }
-    @PostMapping("/candidates/update")
+
+    @PostMapping("/update")
     public String update(
             @ModelAttribute("candidate") Candidate candidate,
             @ModelAttribute("address") Address address,
@@ -102,6 +105,19 @@ public class CandidateController {
         addressRepository.save(address);
 //        candidate.setAddress(address);
         candidateRepository.save(candidate);
+        return "redirect:/candidates";
+    }
+
+    @GetMapping("/delete/{id}")
+    public String delete(
+            @PathVariable("id") long id
+    ) {
+        Optional<Candidate> opt = candidateRepository.findById(id);
+        if (opt.isPresent()) {
+            Candidate candidate = opt.get();
+            candidate.setStatus(-1);
+            candidateRepository.save(candidate);
+        }
         return "redirect:/candidates";
     }
 }
